@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+
 require("dotenv").config();
 
 const app = express();
@@ -7,7 +8,7 @@ const app = express();
 const db = require("./app/models");
 const Role = db.role;
 db.sequelize
-  .sync()
+  .sync({ force: true })
   .then(() => {
     console.log("Drop and Resync Db");
     // initial();
@@ -50,6 +51,7 @@ app.get("/", (req, res) => {
 require("./app/routes/tutorial.routes")(app);
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
+require("./app/routes/role.routes")(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
